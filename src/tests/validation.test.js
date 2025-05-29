@@ -58,7 +58,7 @@ describe("Validation", () => {
 
     test("isCartItem returns false for an invalid cart item object", () => {
       // Arrange
-      const invalidCartItem = { id: 2001, amount: 1 } // Missing 'item' property
+      const invalidCartItem = { id: 2001, amount: 1 } // item is missing
       
       // Act
       const result = isCartItem(invalidCartItem)
@@ -72,7 +72,7 @@ describe("Validation", () => {
       const invalidCartItem = {
         id: 2001,
         amount: 1,
-        item: { id: 1001, name: "Invalid Product" }, // Missing 'price'
+        item: { id: 1001, name: "Invalid Product" }, // price is missing
       }
       
       // Act
