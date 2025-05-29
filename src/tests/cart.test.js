@@ -34,4 +34,16 @@ describe("Cart", () => {
     // Assert
     expect(result).toBe(0)
   })
+  test("addToCart does not add an invalid product to the cart", () => {
+  // Arrange
+  const itemCountBefore = getCartItemCount()
+  const invalidProduct = { name: "missing id and price" }
+
+  // Act
+  addToCart(invalidProduct)
+
+  // Assert
+  const itemCountAfter = getCartItemCount()
+  expect(itemCountAfter).toBe(itemCountBefore)
+  })
 })
