@@ -28,19 +28,21 @@ let idCounter = 2002
 // Du får en funktion att börja med
 
 function getCartItemCount() {
-	throw new Error('TODO')
+  return cart.length
 }
 
 function addToCart(newItem) {
-	if( !isProduct(newItem) ) {
-		return false
-	}
+  if (!isProduct(newItem)) {
+    return false
+  }
 
-	const cartItem = { id: idCounter, amount: 1, item: newItem }
-	idCounter++
-	cart.push(cartItem)
+  const cartItem = { id: idCounter, amount: 1, item: newItem }
+  idCounter++
+  cart.push(cartItem)
 }
 
+function clearCart() {
+  cart.length = 0
+}
 
-
-export { getCartItemCount, addToCart }
+export { getCartItemCount, addToCart, clearCart }
