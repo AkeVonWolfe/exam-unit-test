@@ -13,24 +13,35 @@ const exampleCartObject = {
 }
 
 // Group tests using "describe"
-describe('Validation', () => {
+describe("Validation", () => {
+  // 1. it returns true for a valid cart object
+  // 2. it returns false for invalid cart objects
 
-	// Använd en "test" eller "it" (de är synonymer) för varje testfall
-	/* Exempel på syntax:
-	test('beskriv testfallet', () => {
-		// här skriver du testkoden
-		// avsluta alltid med "expect"
-	})
-	*/
+  // 3. it returns true for a valid product
+  // 4. it returns false for invalid cart objects
 
 
-	// ---------------------------------------------
-	// Följande testfall ska du implementera. Det är tillåtet att använda Joi. Gör i så fall ett schema för varje sorts objekt du vill kunna validera. Du får även ändra texten och du t.ex. vill skriva på svenska i stället för engelska.
-	// (Ta bort dessa kommentarer när du är klar)
+  describe("isProduct", () => {
+    test("isProduct returns true for a valid product object", () => {
+      // Arrange
+      const validProduct = exampleProduct
+      
+      // Act
+      const result = isProduct(validProduct)
+      
+      // Assert
+      expect(result).toBe(true)
+    })
 
-	// 1. it returns true for a valid cart object
-	// 2. it returns false for invalid cart objects
-
-	// 3. it returns true for a valid product
-	// 4. it returns false for invalid cart objects
-})
+        test("returns false for an invalid product", () => {
+          // Arrange
+          const invalidProduct = { name: "Missing price and id" }
+          
+          // Act
+          const result = isProduct(invalidProduct)
+          
+          // Assert
+          expect(result).toBe(false)
+        })
+      })
+    })
