@@ -44,4 +44,42 @@ describe("Validation", () => {
           expect(result).toBe(false)
         })
       })
+    describe("isCartItem", () => {
+    test("isCartItem returns true for a valid cart item object", () => {
+      // Arrange
+      const validCartItem = exampleCartObject
+      
+      // Act
+      const result = isCartItem(validCartItem)
+      
+      // Assert
+      expect(result).toBe(true)
     })
+
+    test("isCartItem returns false for an invalid cart item object", () => {
+      // Arrange
+      const invalidCartItem = { id: 2001, amount: 1 } // Missing 'item' property
+      
+      // Act
+      const result = isCartItem(invalidCartItem)
+      
+      // Assert
+      expect(result).toBe(false)
+    })
+
+    test("isCartItem returns false for an invalid product in cart item", () => {
+      // Arrange
+      const invalidCartItem = {
+        id: 2001,
+        amount: 1,
+        item: { id: 1001, name: "Invalid Product" }, // Missing 'price'
+      }
+      
+      // Act
+      const result = isCartItem(invalidCartItem)
+      
+      // Assert
+      expect(result).toBe(false)
+    })
+  })
+})
