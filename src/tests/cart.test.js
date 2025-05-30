@@ -1,5 +1,5 @@
 // importera här
-import { addToCart, getCartItemCount, clearCart } from "../cart"
+import { addToCart, getCartItemCount, clearCart, getItem } from "../cart"
 
 describe("Cart", () => {
   beforeEach(() => {
@@ -16,7 +16,7 @@ describe("Cart", () => {
     const itemCountBefore = getCartItemCount()
     const input = { id: 1002, name: "Vattenpistol", price: 40 }
 
-	// Act
+	  // Act
     // addToCart returnerar inget - den påverkar kundvagnen
     // vi behöver använda getCartItemCount för att se om det har lagts till en ny produkt i kundvagnen
     addToCart(input)
@@ -45,5 +45,17 @@ describe("Cart", () => {
   // Assert
   const itemCountAfter = getCartItemCount()
   expect(itemCountAfter).toBe(itemCountBefore)
+  })
+
+  test("getItem returns item by index", () => {
+    // Arrange
+    const input = { id: 1003, name: "Badboll", price: 30 }
+    addToCart(input)
+
+    // Act
+    const item = getItem(0)
+
+    // Assert
+    expect(item.item.name).toBe("Badboll")
   })
 })
