@@ -38,7 +38,8 @@ function addToCart(newItem) {
 
   const cartItem = { id: idCounter, amount: 1, item: newItem }
   idCounter++
-  cart.push(cartItem) 
+  cart.push(cartItem)
+  return true
 }
 
 function clearCart() {
@@ -46,28 +47,38 @@ function clearCart() {
 }
 
 function getItem(index) {
+  if (index < 0 || index >= cart.length) { // Check if index is out of bounds
+    return undefined // Return undefined if index is invalid
+  }
   return cart[index]
 }
 
-function getTotalCartValue() {
-  return cart.reduce((total, item) => total + item.item.price * item.amount, 0) // Calculate the total value of the cart by multiplying each item's price by its amount and summing them up
+function getCartValue() {
+  return cart.reduce((total, item) => total + item.item.price * item.amount, 0)
 }
 
 function removeFromCart(productId) {
-  const index = cart.findIndex((cartItem) => cartItem.item.id === productId) // Find the index of the cart item with the given productId
-  if (index !== -1) { // Check if the item exists in the cart
-    cart.splice(index, 1) // Remove the item from the cart if it exists
+  const index = cart.findIndex((cartItem) => cartItem.item.id === productId) // Find the index of the product in the cart
+  if (index !== -1) { 
+    cart.splice(index, 1) // Remove the item from the cart
+    return true
   }
+  return false
 }
 
 function editCart(productId, newValues) {
-  const index = cart.findIndex((cartItem) => cartItem.item.id === productId)
-  if (index !== -1) {
-    const updatedItem = { ...cart[index], ...newValues }
-    if (isCartItem(updatedItem)) {
-      cart[index] = updatedItem
-    }
+  const index = cart.findIndex((cartItem) => cartItem.item.id === productId) // Find the index of the product in the cart
+  if (index === -1) { // Product not found
+    return false
   }
+  
+  const updatedItem = { ...cart[index], ...newValues } // Merge new values with existing item
+  if (!isCartItem(updatedItem)) { // Validate the updated item
+    return false
+  }
+  
+  cart[index] = updatedItem
+  return true
 }
 
-export { getCartItemCount, addToCart, clearCart, getItem, getTotalCartValue, removeFromCart, editCart }
+export { getCartItemCount, addToCart, clearCart, getItem, getCartValue, removeFromCart, editCart }
