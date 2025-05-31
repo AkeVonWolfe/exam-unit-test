@@ -38,7 +38,7 @@ function addToCart(newItem) {
 
   const cartItem = { id: idCounter, amount: 1, item: newItem }
   idCounter++
-  cart.push(cartItem)
+  cart.push(cartItem) 
 }
 
 function clearCart() {
@@ -50,7 +50,14 @@ function getItem(index) {
 }
 
 function getTotalCartValue() {
-  return cart.reduce((total, item) => total + item.item.price * item.amount, 0)
+  return cart.reduce((total, item) => total + item.item.price * item.amount, 0) // Calculate the total value of the cart by multiplying each item's price by its amount and summing them up
 }
 
-export { getCartItemCount, addToCart, clearCart, getItem, getTotalCartValue }
+function removeFromCart(productId) {
+  const index = cart.findIndex((cartItem) => cartItem.item.id === productId) // Find the index of the cart item with the given productId
+  if (index !== -1) { // Check if the item exists in the cart
+    cart.splice(index, 1) // Remove the item from the cart if it exists
+  }
+}
+
+export { getCartItemCount, addToCart, clearCart, getItem, getTotalCartValue, removeFromCart }

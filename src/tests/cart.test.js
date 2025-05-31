@@ -1,5 +1,5 @@
 // importera här
-import { addToCart, getCartItemCount, clearCart, getItem, getTotalCartValue } from "../cart"
+import { addToCart, getCartItemCount, clearCart, getItem, getTotalCartValue, removeFromCart } from "../cart"
 
 describe("Cart", () => {
   beforeEach(() => {
@@ -77,5 +77,22 @@ describe("Cart", () => {
 
     // Assert
     expect(totalValue).toBe(500)
+  })
+
+  describe("removeFromCart", () => {
+    test("removeFromCart removes item from cart", () => {
+      // Arrange
+      const item1 = { id: 1006, name: "Tennisboll", price: 50 }
+      const item2 = { id: 1007, name: "Golfboll", price: 60 }
+      addToCart(item1)
+      addToCart(item2)
+
+      // Act
+      removeFromCart(item1.id)
+
+      // Assert
+      expect(getCartItemCount()).toBe(1)
+
+    })
   })
 })
