@@ -60,4 +60,14 @@ function removeFromCart(productId) {
   }
 }
 
-export { getCartItemCount, addToCart, clearCart, getItem, getTotalCartValue, removeFromCart }
+function editCart(productId, newValues) {
+  const index = cart.findIndex((cartItem) => cartItem.item.id === productId)
+  if (index !== -1) {
+    const updatedItem = { ...cart[index], ...newValues }
+    if (isCartItem(updatedItem)) {
+      cart[index] = updatedItem
+    }
+  }
+}
+
+export { getCartItemCount, addToCart, clearCart, getItem, getTotalCartValue, removeFromCart, editCart }

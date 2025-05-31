@@ -1,5 +1,5 @@
 // importera här
-import { addToCart, getCartItemCount, clearCart, getItem, getTotalCartValue, removeFromCart } from "../cart"
+import { addToCart, getCartItemCount, clearCart, getItem, getTotalCartValue, removeFromCart, editCart } from "../cart"
 
 describe("Cart", () => {
   beforeEach(() => {
@@ -93,6 +93,36 @@ describe("Cart", () => {
       // Assert
       expect(getCartItemCount()).toBe(1)
 
+    })
+
+    describe("editCart", () => {
+      test("editCart updates item in cart", () => {
+        // Arrange
+        const item1 = { id: 1008, name: "Baseboll", price: 20 }
+        addToCart(item1)
+
+        // Act
+        const newValues = { amount: 3 }
+        editCart(item1.id, newValues)
+
+        // Assert
+        const updatedItem = getItem(0)
+        expect(updatedItem.amount).toBe(3)
+      })
+
+      test("editCart does not update item if it does not exist", () => {
+        // Arrange
+        const item1 = { id: 1009, name: "Racket", price: 150 }
+        addToCart(item1)
+
+        // Act
+        const newValues = { amount: 2 }
+        editCart(9999, newValues) // Non-existing item ID
+
+        // Assert
+        const updatedItem = getItem(0)
+        expect(updatedItem.amount).toBe(1) // Should remain unchanged
+      })
     })
   })
 })
