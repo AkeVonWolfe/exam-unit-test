@@ -49,4 +49,8 @@ function getItem(index) {
   return cart[index]
 }
 
-export { getCartItemCount, addToCart, clearCart, getItem }
+function getTotalCartValue() {
+  return cart.reduce((total, item) => total + item.item.price * item.amount, 0)
+}
+
+export { getCartItemCount, addToCart, clearCart, getItem, getTotalCartValue }

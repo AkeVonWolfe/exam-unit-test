@@ -20,7 +20,6 @@ describe("Validation", () => {
   // 3. it returns true for a valid product
   // 4. it returns false for invalid cart objects
 
-
   describe("isProduct", () => {
     test("isProduct returns true for a valid product object", () => {
       // Arrange
@@ -44,6 +43,9 @@ describe("Validation", () => {
           expect(result).toBe(false)
         })
       })
+      
+
+      // Testa att isProduct returnerar false för en ogiltig produkt
     describe("isCartItem", () => {
     test("isCartItem returns true for a valid cart item object", () => {
       // Arrange
@@ -56,6 +58,7 @@ describe("Validation", () => {
       expect(result).toBe(true)
     })
 
+    // Testa att isCartItem returnerar false för en ogiltig kundvagnsobjekt
     test("isCartItem returns false for an invalid cart item object", () => {
       // Arrange
       const invalidCartItem = { id: 2001, amount: 1 } // item is missing
@@ -67,6 +70,8 @@ describe("Validation", () => {
       expect(result).toBe(false)
     })
 
+
+    // Testa att isCartItem returnerar false för en ogiltig produkt i kundvagnsobjekt
     test("isCartItem returns false for an invalid product in cart item", () => {
       // Arrange
       const invalidCartItem = {
