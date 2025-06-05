@@ -75,6 +75,75 @@ describe("Cart", () => {
       expect(itemCountAfter).toBe(itemCountBefore) // Should not change item count
       expect(result).toBe(false) // Should not add null to cart
     })
+
+    test("returns false for undefined input", () => {
+      // Arrange
+      const itemCountBefore = getCartItemCount()
+
+      // Act
+      const result = addToCart(undefined) // Should not add undefined to the cart
+
+      // Assert
+      const itemCountAfter = getCartItemCount() // Should get the item count after trying to add undefined
+      expect(itemCountAfter).toBe(itemCountBefore) // Should not change item count
+      expect(result).toBe(false) // Should not add undefined to cart
+    })
+
+    test("returns false for product missing id", () => {
+      // Arrange
+      const itemCountBefore = getCartItemCount()
+      const invalidProduct = { name: "Vattenpistol", price: 40 } // missing id
+
+      // Act
+      const result = addToCart(invalidProduct) // Should not add product missing id
+
+      // Assert
+      const itemCountAfter = getCartItemCount()
+      expect(itemCountAfter).toBe(itemCountBefore) // Should not change item count
+      expect(result).toBe(false) // Should return false for product missing id
+    })
+
+    test("returns false for product missing name", () => {
+      // Arrange
+      const itemCountBefore = getCartItemCount()
+      const invalidProduct = { id: 1003, price: 40 } // missing name
+
+      // Act
+      const result = addToCart(invalidProduct) // Should not add product missing name
+
+      // Assert
+      const itemCountAfter = getCartItemCount()
+      expect(itemCountAfter).toBe(itemCountBefore) // Should not change item count
+      expect(result).toBe(false) // Should return false for product missing name
+    })
+
+    test("returns false for product missing price", () => {
+      // Arrange
+      const itemCountBefore = getCartItemCount()
+      const invalidProduct = { id: 1004, name: "Vattenpistol" } // missing price
+
+      // Act
+      const result = addToCart(invalidProduct) // Should not add product missing price
+
+      // Assert
+      const itemCountAfter = getCartItemCount()
+      expect(itemCountAfter).toBe(itemCountBefore) // Should not change item count
+      expect(result).toBe(false) // Should return false for product missing price
+    })
+
+    test("returns false for empty object", () => {
+      // Arrange
+      const itemCountBefore = getCartItemCount()
+      const invalidProduct = {} // empty object
+
+      // Act
+      const result = addToCart(invalidProduct) // Should not add empty object
+
+      // Assert
+      const itemCountAfter = getCartItemCount()
+      expect(itemCountAfter).toBe(itemCountBefore) // Should not change item count
+      expect(result).toBe(false) // Should return false for empty object
+    })
   })
 
   describe("getItem", () => {
@@ -111,6 +180,42 @@ describe("Cart", () => {
 
       // Assert
       expect(item).toBeUndefined() // Should return undefined for empty cart
+    })
+
+    test("returns undefined for null index", () => {
+      // Arrange
+      const input = { id: 1003, name: "Badboll", price: 30 }
+      addToCart(input)
+
+      // Act
+      const item = getItem(null) // Should return undefined for null index
+
+      // Assert
+      expect(item).toBeUndefined() // Should return undefined for null index
+    })
+
+    test("returns undefined for undefined index", () => {
+      // Arrange
+      const input = { id: 1003, name: "Badboll", price: 30 }
+      addToCart(input)
+
+      // Act
+      const item = getItem(undefined) // Should return undefined for undefined index
+
+      // Assert
+      expect(item).toBeUndefined() // Should return undefined for undefined index
+    })
+
+    test("returns undefined for string index", () => {
+      // Arrange
+      const input = { id: 1003, name: "Badboll", price: 30 }
+      addToCart(input)
+
+      // Act
+      const item = getItem("0") // Should return undefined for string index
+
+      // Assert
+      expect(item).toBeUndefined() // Should return undefined for string index
     })
   })
   
@@ -187,6 +292,45 @@ describe("Cart", () => {
       // Assert
       expect(result).toBe(false) // Should return false when cart is empty
     })
+
+    test("returns false for null id", () => {
+      // Arrange
+      const item1 = { id: 1008, name: "Baseboll", price: 20 }
+      addToCart(item1)
+
+      // Act
+      const result = removeFromCart(null) // null ID
+
+      // Assert
+      expect(getCartItemCount()).toBe(1) // Should still be 1 item in cart
+      expect(result).toBe(false) // Should return false for null id
+    })
+
+    test("returns false for undefined id", () => {
+      // Arrange
+      const item1 = { id: 1008, name: "Baseboll", price: 20 }
+      addToCart(item1)
+
+      // Act
+      const result = removeFromCart(undefined) // undefined ID
+
+      // Assert
+      expect(getCartItemCount()).toBe(1) // Should still be 1 item in cart
+      expect(result).toBe(false) // Should return false for undefined id
+    })
+
+    test("returns false for string id", () => {
+      // Arrange
+      const item1 = { id: 1008, name: "Baseboll", price: 20 }
+      addToCart(item1)
+
+      // Act
+      const result = removeFromCart("1008") // string ID
+
+      // Assert
+      expect(getCartItemCount()).toBe(1) // Should still be 1 item in cart
+      expect(result).toBe(false) // Should return false for string id
+    })
   })
 
   describe("editCart", () => {
@@ -248,6 +392,94 @@ describe("Cart", () => {
       const updatedItem = getItem(0) // Should return the updated item
       expect(updatedItem.amount).toBe(5) // Should be updated to 5
       expect(result).toBe(true) // Should return true for successful update
+    })
+
+    test("returns false for null id", () => {
+      // Arrange
+      const item1 = { id: 1012, name: "Fotboll", price: 200 }
+      addToCart(item1)
+
+      // Act
+      const newValues = { amount: 2 }
+      const result = editCart(null, newValues) // null ID
+
+      // Assert
+      const updatedItem = getItem(0)
+      expect(updatedItem.amount).toBe(1) // Should remain unchanged
+      expect(result).toBe(false) // Should return false for null id
+    })
+
+    test("returns false for undefined id", () => {
+      // Arrange
+      const item1 = { id: 1013, name: "Basketboll", price: 300 }
+      addToCart(item1)
+
+      // Act
+      const newValues = { amount: 2 }
+      const result = editCart(undefined, newValues) // undefined ID
+
+      // Assert
+      const updatedItem = getItem(0)
+      expect(updatedItem.amount).toBe(1) // Should remain unchanged
+      expect(result).toBe(false) // Should return false for undefined id
+    })
+
+    test("returns false for null newValues", () => {
+      // Arrange
+      const item1 = { id: 1014, name: "Handboll", price: 90 }
+      addToCart(item1)
+
+      // Act
+      const result = editCart(item1.id, null) // null newValues
+
+      // Assert
+      const updatedItem = getItem(0)
+      expect(updatedItem.amount).toBe(1) // Should remain unchanged
+      expect(result).toBe(false) // Should return false for null newValues
+    })
+
+    test("returns false for undefined newValues", () => {
+      // Arrange
+      const item1 = { id: 1015, name: "Volleyboll", price: 80 }
+      addToCart(item1)
+
+      // Act
+      const result = editCart(item1.id, undefined) // undefined newValues
+
+      // Assert
+      const updatedItem = getItem(0)
+      expect(updatedItem.amount).toBe(1) // Should remain unchanged
+      expect(result).toBe(false) // Should return false for undefined newValues
+    })
+
+    test("returns false for negative amount", () => {
+      // Arrange
+      const item1 = { id: 1016, name: "Pingpongboll", price: 15 }
+      addToCart(item1)
+
+      // Act
+      const newValues = { amount: -1 } // negative amount
+      const result = editCart(item1.id, newValues)
+
+      // Assert
+      const updatedItem = getItem(0)
+      expect(updatedItem.amount).toBe(1) // Should remain unchanged
+      expect(result).toBe(false) // Should return false for negative amount
+    })
+
+    test("returns false for zero amount", () => {
+      // Arrange
+      const item1 = { id: 1017, name: "Squashboll", price: 25 }
+      addToCart(item1)
+
+      // Act
+      const newValues = { amount: 0 } // zero amount
+      const result = editCart(item1.id, newValues)
+
+      // Assert
+      const updatedItem = getItem(0)
+      expect(updatedItem.amount).toBe(1) // Should remain unchanged
+      expect(result).toBe(false) // Should return false for zero amount
     })
   })
 

@@ -47,7 +47,8 @@ function clearCart() {
 }
 
 function getItem(index) {
-  if (index < 0 || index >= cart.length) { // Check if index is out of bounds
+  // Check if index is a valid number and within bounds
+  if (typeof index !== 'number' || index < 0 || index >= cart.length) {
     return undefined // Return undefined if index is invalid
   }
   return cart[index]
@@ -58,6 +59,11 @@ function getCartValue() {
 }
 
 function removeFromCart(productId) {
+  // Check if productId is a valid number
+  if (typeof productId !== 'number') {
+    return false
+  }
+  
   const index = cart.findIndex((cartItem) => cartItem.item.id === productId) // Find the index of the product in the cart or return -1 if not found
   if (index !== -1) { 
     cart.splice(index, 1) // Remove the item from the cart
@@ -67,6 +73,11 @@ function removeFromCart(productId) {
 }
 
 function editCart(productId, newValues) {
+  // Check if productId is a valid number and newValues is not null/undefined
+  if (typeof productId !== 'number' || newValues == null) {
+    return false
+  }
+  
   const index = cart.findIndex((cartItem) => cartItem.item.id === productId) // Find the index of the product in the cart or return -1 if not found
   if (index === -1) { // Product not found
     return false
@@ -74,6 +85,11 @@ function editCart(productId, newValues) {
   
   const updatedItem = { ...cart[index], ...newValues } // Merge new values with existing item
   if (!isCartItem(updatedItem)) { // Validate the updated item
+    return false
+  }
+  
+  // Additional validation for amount (must be positive)
+  if (updatedItem.amount <= 0) {
     return false
   }
   
