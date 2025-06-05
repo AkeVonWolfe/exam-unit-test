@@ -72,7 +72,7 @@ function editCart(productId, newValues) {
     return false
   }
   
-  const updatedItem = { ...cart[index], ...newValues } // Merge new values with existing item 
+  const updatedItem = { ...cart[index], ...newValues } // Merge new values with existing item
   if (!isCartItem(updatedItem)) { // Validate the updated item
     return false
   }
