@@ -35,6 +35,7 @@ describe("Validation", () => {
         test("returns false for an invalid product", () => {
           // Arrange
           const invalidProduct = { name: "Missing price and id" }
+          // mer än bara 1 saknas
           
           // Act
           const result = isProduct(invalidProduct) // Call the function with an invalid product
