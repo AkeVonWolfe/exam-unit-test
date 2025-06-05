@@ -13,10 +13,10 @@ describe("Cart", () => {
   describe("getCartItemCount", () => {
     test("returns 0 when the cart is empty", () => {
       // Arrange & Act
-      const result = getCartItemCount()
+      const result = getCartItemCount() // Should return the total number of items in the cart
 
       // Assert
-      expect(result).toBe(0)
+      expect(result).toBe(0) // Should return 0 when cart is empty
     })
 
     test("returns correct count when items are in cart", () => {
@@ -37,28 +37,28 @@ describe("Cart", () => {
   describe("addToCart", () => {
     test("lägger till en ny produkt i kundvagnen", () => {
       // Arrange
-      const itemCountBefore = getCartItemCount()
+      const itemCountBefore = getCartItemCount() // Should get the current item count before adding a new product
       const input = { id: 1002, name: "Vattenpistol", price: 40 }
 
       // Act
-      const result = addToCart(input)
+      const result = addToCart(input) // Should add a new product to the cart
 
       // Assert
-      const itemCountAfter = getCartItemCount()
+      const itemCountAfter = getCartItemCount() // Should get the item count after adding the new product
       expect(itemCountAfter).toBe(itemCountBefore + 1) // Should increase item count by 1
       expect(result).toBe(true) // Should return true for successful addition
     })
 
     test("does not add an invalid product to the cart", () => {
       // Arrange
-      const itemCountBefore = getCartItemCount()
+      const itemCountBefore = getCartItemCount() // Should get the current item count before adding an invalid product
       const invalidProduct = { name: "missing id and price" }
 
       // Act
-      const result = addToCart(invalidProduct)
+      const result = addToCart(invalidProduct) // Should not add an invalid product to the cart
 
       // Assert
-      const itemCountAfter = getCartItemCount()
+      const itemCountAfter = getCartItemCount() // Should get the item count after trying to add an invalid product
       expect(itemCountAfter).toBe(itemCountBefore) // Should not change item count
       expect(result).toBe(false) // Should not add invalid product to cart
     })
@@ -68,10 +68,10 @@ describe("Cart", () => {
       const itemCountBefore = getCartItemCount()
 
       // Act
-      const result = addToCart(null)
+      const result = addToCart(null) // Should not add null to the cart
 
       // Assert
-      const itemCountAfter = getCartItemCount()
+      const itemCountAfter = getCartItemCount() // Should get the item count after trying to add null
       expect(itemCountAfter).toBe(itemCountBefore) // Should not change item count
       expect(result).toBe(false) // Should not add null to cart
     })
@@ -84,7 +84,7 @@ describe("Cart", () => {
       addToCart(input)
 
       // Act
-      const item = getItem(0)
+      const item = getItem(0) // Should return the item at index 0
 
       // Assert
       expect(item.item.name).toBe("Badboll") // Should return the correct item
@@ -97,8 +97,8 @@ describe("Cart", () => {
       addToCart(input)
 
       // Act
-      const item1 = getItem(-1)
-      const item2 = getItem(5)
+      const item1 = getItem(-1) // Should return undefined for negative index
+      const item2 = getItem(5) // Should return undefined for index out of bounds
 
       // Assert
       expect(item1).toBeUndefined() // Should return undefined for negative index
@@ -107,7 +107,7 @@ describe("Cart", () => {
 
     test("returns undefined when cart is empty", () => {
       // Act
-      const item = getItem(0)
+      const item = getItem(0) // Should return undefined when cart is empty
 
       // Assert
       expect(item).toBeUndefined() // Should return undefined for empty cart
@@ -131,7 +131,7 @@ describe("Cart", () => {
       addToCart(item2)
 
       // Act
-      const totalValue = getCartValue()
+      const totalValue = getCartValue() // Should calculate the total value of items in the cart
 
       // Assert
       expect(totalValue).toBe(500) // 200 + 300
@@ -140,11 +140,11 @@ describe("Cart", () => {
     test("calculates value correctly with different amounts", () => {
       // Arrange
       const item1 = { id: 1006, name: "Tennisboll", price: 50 }
-      addToCart(item1)
-      editCart(item1.id, { amount: 3 })
+      addToCart(item1) 
+      editCart(item1.id, { amount: 3 }) 
 
       // Act
-      const totalValue = getCartValue()
+      const totalValue = getCartValue() // Should calculate the total value of items in the cart
 
       // Assert
       expect(totalValue).toBe(150) // 50 * 3
@@ -160,7 +160,7 @@ describe("Cart", () => {
       addToCart(item2)
 
       // Act
-      const result = removeFromCart(item1.id)
+      const result = removeFromCart(item1.id) // Should remove the item with id 1006
 
       // Assert
       expect(getCartItemCount()).toBe(1) // Should be 1 item left
@@ -176,16 +176,16 @@ describe("Cart", () => {
       const result = removeFromCart(1337) // Non-existing ID
 
       // Assert
-      expect(getCartItemCount()).toBe(1)
-      expect(result).toBe(false)
+      expect(getCartItemCount()).toBe(1) // Should still be 1 item in cart
+      expect(result).toBe(false) // Should return false for non-existing item
     })
 
     test("returns false when trying to remove from empty cart", () => {
       // Act
-      const result = removeFromCart(1001)
+      const result = removeFromCart(1001) // Non-existing ID in empty cart
 
       // Assert
-      expect(result).toBe(false)
+      expect(result).toBe(false) // Should return false when cart is empty
     })
   })
 
@@ -196,11 +196,11 @@ describe("Cart", () => {
       addToCart(item1)
 
       // Act
-      const newValues = { amount: 3 }
+      const newValues = { amount: 3 } // New values to update the item
       const result = editCart(item1.id, newValues) // Update amount to 3
 
       // Assert
-      const updatedItem = getItem(0)
+      const updatedItem = getItem(0) // Should return the updated item
       expect(updatedItem.amount).toBe(3) // Should be updated to 3
       expect(result).toBe(true) // Should return true for successful update
     })
@@ -211,13 +211,13 @@ describe("Cart", () => {
       addToCart(item1)
 
       // Act
-      const newValues = { amount: 2 }
+      const newValues = { amount: 2 } // New values to update the item
       const result = editCart(9999, newValues) // Non-existing item ID
 
       // Assert
-      const updatedItem = getItem(0)
+      const updatedItem = getItem(0) // Should return the original item
       expect(updatedItem.amount).toBe(1) // Should remain unchanged
-      expect(result).toBe(false)
+      expect(result).toBe(false) // Should return false for non-existing item
     })
 
     test("does not update if newValues would make invalid cart item", () => {
@@ -227,12 +227,12 @@ describe("Cart", () => {
 
       // Act
       const invalidValues = { amount: "invalid" } // amount should be number
-      const result = editCart(item1.id, invalidValues)
+      const result = editCart(item1.id, invalidValues) // Attempt to update with invalid values
 
       // Assert
-      const updatedItem = getItem(0)
+      const updatedItem = getItem(0) // Should return the original item
       expect(updatedItem.amount).toBe(1) // Should remain unchanged
-      expect(result).toBe(false)
+      expect(result).toBe(false) // Should return false for invalid update
     })
 
     test("can update multiple properties at once", () => {
@@ -241,13 +241,13 @@ describe("Cart", () => {
       addToCart(item1)
 
       // Act
-      const newValues = { amount: 5 }
-      const result = editCart(item1.id, newValues)
+      const newValues = { amount: 5 } // New values to update the item
+      const result = editCart(item1.id, newValues) // Update amount to 5
 
       // Assert
-      const updatedItem = getItem(0)
-      expect(updatedItem.amount).toBe(5)
-      expect(result).toBe(true)
+      const updatedItem = getItem(0) // Should return the updated item
+      expect(updatedItem.amount).toBe(5) // Should be updated to 5
+      expect(result).toBe(true) // Should return true for successful update
     })
   })
 
@@ -260,7 +260,7 @@ describe("Cart", () => {
       addToCart(item2)
 
       // Act
-      clearCart()
+      clearCart() // Should clear the cart
 
       // Assert
       expect(getCartItemCount()).toBe(0) // Should be 0 after clearing

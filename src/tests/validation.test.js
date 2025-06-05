@@ -23,13 +23,13 @@ describe("Validation", () => {
   describe("isProduct", () => {
     test("isProduct returns true for a valid product object", () => {
       // Arrange
-      const validProduct = exampleProduct
+      const validProduct = exampleProduct 
       
       // Act
-      const result = isProduct(validProduct)
+      const result = isProduct(validProduct) // Call the function with a valid product
       
       // Assert
-      expect(result).toBe(true)
+      expect(result).toBe(true) // Check that the result is true
     })
 
         test("returns false for an invalid product", () => {
@@ -37,10 +37,10 @@ describe("Validation", () => {
           const invalidProduct = { name: "Missing price and id" }
           
           // Act
-          const result = isProduct(invalidProduct)
+          const result = isProduct(invalidProduct) // Call the function with an invalid product
           
           // Assert
-          expect(result).toBe(false)
+          expect(result).toBe(false) // Check that the result is false
         })
       })
       
@@ -52,10 +52,10 @@ describe("Validation", () => {
       const validCartItem = exampleCartObject
       
       // Act
-      const result = isCartItem(validCartItem)
+      const result = isCartItem(validCartItem) // Call the function with a valid cart item
       
       // Assert
-      expect(result).toBe(true)
+      expect(result).toBe(true) // Check that the result is true
     })
 
     // Testa att isCartItem returnerar false för en ogiltig kundvagnsobjekt
@@ -64,10 +64,10 @@ describe("Validation", () => {
       const invalidCartItem = { id: 2001, amount: 1 } // item is missing
       
       // Act
-      const result = isCartItem(invalidCartItem)
+      const result = isCartItem(invalidCartItem) // Call the function with an invalid cart item
       
       // Assert
-      expect(result).toBe(false)
+      expect(result).toBe(false) // Check that the result is false
     })
 
 
@@ -81,10 +81,10 @@ describe("Validation", () => {
       }
       
       // Act
-      const result = isCartItem(invalidCartItem)
+      const result = isCartItem(invalidCartItem) // Call the function with an invalid cart item
       
       // Assert
-      expect(result).toBe(false)
+      expect(result).toBe(false) // Check that the result is false
     })
   })
 })

@@ -28,17 +28,17 @@ let idCounter = 2002
 // Du får en funktion att börja med
 
 function getCartItemCount() {
-  return cart.reduce((count, item) => count + item.amount, 0)
+  return cart.reduce((count, item) => count + item.amount, 0) // Return the total count of items in the cart
 }
 
-function addToCart(newItem) {
-  if (!isProduct(newItem)) {
+function addToCart(newItem) { 
+  if (!isProduct(newItem)) { //check if newItem is a valid product
     return false
   }
 
-  const cartItem = { id: idCounter, amount: 1, item: newItem }
+  const cartItem = { id: idCounter, amount: 1, item: newItem } // Create a new cart item with a unique id, amount of 1, and the product
   idCounter++
-  cart.push(cartItem)
+  cart.push(cartItem) // Add the new item to the cart
   return true
 }
 
@@ -54,11 +54,11 @@ function getItem(index) {
 }
 
 function getCartValue() {
-  return cart.reduce((total, item) => total + item.item.price * item.amount, 0)
+  return cart.reduce((total, item) => total + item.item.price * item.amount, 0) // Calculate the total value of the cart by summing up the price of each item multiplied by its amount
 }
 
 function removeFromCart(productId) {
-  const index = cart.findIndex((cartItem) => cartItem.item.id === productId) // Find the index of the product in the cart
+  const index = cart.findIndex((cartItem) => cartItem.item.id === productId) // Find the index of the product in the cart or return -1 if not found
   if (index !== -1) { 
     cart.splice(index, 1) // Remove the item from the cart
     return true
@@ -67,12 +67,12 @@ function removeFromCart(productId) {
 }
 
 function editCart(productId, newValues) {
-  const index = cart.findIndex((cartItem) => cartItem.item.id === productId) // Find the index of the product in the cart
+  const index = cart.findIndex((cartItem) => cartItem.item.id === productId) // Find the index of the product in the cart or return -1 if not found
   if (index === -1) { // Product not found
     return false
   }
   
-  const updatedItem = { ...cart[index], ...newValues } // Merge new values with existing item
+  const updatedItem = { ...cart[index], ...newValues } // Merge new values with existing item 
   if (!isCartItem(updatedItem)) { // Validate the updated item
     return false
   }
